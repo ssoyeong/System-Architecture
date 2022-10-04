@@ -1,6 +1,6 @@
 version: "3"
 services:
-  web:
+  reverse-proxy:
     platform: linux/amd64
     image: nginx
     ports:
@@ -8,8 +8,10 @@ services:
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
     depends_on:
-      - spring
-  spring:
+      - my-service
+    links:
+      - my-service
+  my-service:
     platform: linux/amd64
     build: .
     ports:
